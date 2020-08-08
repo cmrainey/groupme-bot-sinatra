@@ -1,6 +1,3 @@
-require 'net/http'
-require 'json'
-
 class OpenWeatherApi
   def self.call_api(zip)
     url = "https://api.openweathermap.org/data/2.5/weather?zip=#{zip},us&appid=#{OPEN_WEATHER_API_KEY}&units=imperial"

@@ -1,9 +1,3 @@
-require "json"
-require "openssl"
-require "faraday"
-require "mimemagic"
-
-
 class GroupMeApi
 
   def self.post_message(text, bot_id, attachment=nil)

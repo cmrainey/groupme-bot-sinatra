@@ -1,5 +1,9 @@
-require 'sinatra'
-require 'json'
+require "sinatra"
+require "json"
+require "openssl"
+require "faraday"
+require "mimemagic"
+require "net/http"
 require_relative "app"
 require_relative "lib/group_me_api"
 require_relative "lib/command_processor"

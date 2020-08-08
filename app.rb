@@ -1,5 +1,4 @@
-require_relative "environment.rb"
-
+#require_relative "environment.rb"
 post "/" do
   message = params
   message = JSON.parse(request.body.read)
@@ -9,7 +8,7 @@ post "/" do
     if message["text"][0] == "!" #commands start with "!", but you can define a different starting char as needed
       CommandProcessor.process(message, bot)
     else
-      MessageScanner.scan(message, bot) # scan for keywords for automated responses
+      MessageScanner.scan(message, message) # scan for keywords for automated responses
     end
   end
 end
