@@ -28,7 +28,7 @@ if RACK_ENV == "production"
   CHRISTMAS_GIFS = ENV['CHRISTMAS_GIFS'].split(",")
   STUDY_GIFS = ENV['STUDY_GIFS'].split(",")
   CERT_PATH = ENV['CERT_PATH']
-  # parse the BOTS environment variable since Heroku doesn't do arrays
+  # parse the BOTS environment variable since Heroku doesn't do arrays in config vars
   # default string format to parse into bot array is:
   #
   # - "bot_id:abc123;group_name:Test Group 1;group_id:123456|bot_id:def456;group_name:Test Group 2;group_id:654321"

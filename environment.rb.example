@@ -1,16 +1,23 @@
 # The constants below are required for the app to function. Set them in your production environment.
+RACK_ENV = "development"
 
-# the URL used to post to the GroupMe API
+# the URLs used to post to the GroupMe API
 GROUPME_POST_URL = "https://api.groupme.com/v3/bots/post"
 GROUPME_IMAGE_URL = "https://image.groupme.com/pictures"
 
-ENV = "development"
-
-# GroupMe API requires SSL connection
-CERT_PATH = "/path/to/ssl/cert"
-
 # your groupme developers access token
 GROUPME_ACCESS_TOKEN = "foo"
+
+# API token for OpenWeather.org used for the "!weather" command
+OPEN_WEATHER_API_KEY = "foo"
+
+# path to the local SSL cert for HTTPS connections with Faraday
+CERT_PATH = "/path/to/ssl/cert"
+
+# arrays of image file names for the "!christmas" and "!study" commands
+# files should be stored in /assets in the app root dir
+CHRISTMAS_GIFS = ["beautiful.gif", "candles.gif","charlie_brown.gif","grinch.gif","santa.gif","snownman.gif"]
+STUDY_GIFS = ["chilled_cow.gif","loki.gif","study_time.gif"]
 
 # create an array of the bots that you wish to use. Any number can be added.
 # group_name is not necessary, but is added for convenience to remember which bot goes with which group when handling multiple bots
