@@ -20,7 +20,7 @@ class CommandProcessor
       end
     elsif message_body == "!stefanchristmas"
       text = "Merry Christmas!"
-      image = File.open("assets/christmas_gifs/#{ENV['CHRISTMAS_GIFS'].sample}", "r")
+      image = File.open("assets/christmas_gifs/#{CHRISTMAS_GIFS.sample}", "r")
       begin
         image_url = GroupMeApi.post_image(image)
         attachment = { "type" => "image", "url" => image_url }
@@ -29,7 +29,7 @@ class CommandProcessor
       end
     elsif message_body == "!study"
       text = "Go study!"
-      image = File.open("assets/study_gifs/#{ENV['STUDY_GIFS'].sample}", "r")
+      image = File.open("assets/study_gifs/#{STUDY_GIFS.sample}", "r")
       begin
         image_url = GroupMeApi.post_image(image)
         attachment = { "type" => "image", "url" => image_url }

@@ -1,6 +1,6 @@
 class OpenWeatherApi
   def self.call_api(zip)
-    url = "https://api.openweathermap.org/data/2.5/weather?zip=#{zip},us&appid=#{ENV['OPEN_WEATHER_API_KEY']}&units=imperial"
+    url = "https://api.openweathermap.org/data/2.5/weather?zip=#{zip},us&appid=#{OPEN_WEATHER_API_KEY}&units=imperial"
     uri = URI(url)
     response = Net::HTTP.get(uri)
     parsed_response = JSON.parse(response)
