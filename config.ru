@@ -13,7 +13,11 @@ require_relative "lib/message_scanner"
 require_relative "lib/open_weather_api"
 
 # set RACK_ENV if it's not set already
-RACK_ENV ||= "development"
+if ENV['RACK_ENV'] != nil
+  RACK_ENV = ENV['RACK_ENV']
+else
+  RACK_ENV = "development"
+end
 
 if RACK_ENV == "production"
   # Heroku ENV constants
