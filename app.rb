@@ -4,7 +4,7 @@ post "/" do
   message = JSON.parse(request.body.read)
   # parse the BOTS environment variable
   bots = []
-  BOTS.split("|").each do |s|
+  ENV['BOTS'].split("|").each do |s|
     strings = s.split(";")
     bot_id = strings[0].split(":")[1]
     group_id = strings[2].split(":")[1]

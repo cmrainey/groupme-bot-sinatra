@@ -7,9 +7,9 @@ class GroupMeApi
     end
     header = { 'Content-Type': "text/json" }
     if DEV == true # Heroku SSL path is different than local
-      connection = Faraday.new(GROUPME_POST_URL, :ssl => { :ca_path => CERT_PATH })
+      connection = Faraday.new(ENV['GROUPME_POST_URL'], :ssl => { :ca_path => CERT_PATH })
     else
-      connection = Faraday.new(GROUPME_POST_URL, :ssl => { :ca_file => CERT_PATH })
+      connection = Faraday.new(ENV['GROUPME_POST_URL'], :ssl => { :ca_file => CERT_PATH })
     end
     resp = connection.post do |req|
       req.headers["Content-Type"] = "application/json"
@@ -19,14 +19,14 @@ class GroupMeApi
 
   def self.post_image(file)
     if DEV == true # Heroku SSL path is different than local
-      connection = Faraday.new(GROUPME_IMAGE_URL) do |f|
+      connection = Faraday.new(ENV['GROUPME_IMAGE_URL']) do |f|
         f.ssl.ca_path = CERT_PATH
         f.request :multipart
         f.request :url_encoded
         f.adapter :net_http
       end
     else
-      connection = Faraday.new(GROUPME_IMAGE_URL) do |f|
+      connection = Faraday.new(ENV['GROUPME_IMAGE_URL']) do |f|
         f.ssl.ca_file = CERT_PATH
         f.request :multipart
         f.request :url_encoded
@@ -35,7 +35,7 @@ class GroupMeApi
     end
     post = connection.post do |req|
       req.headers["Content-Type"] = MimeMagic.by_magic(file).type
-      req.headers["X-Access-Token"] = GROUPME_ACCESS_TOKEN
+      req.headers["X-Access-Token"] = ENV['GROUPME_ACCESS_TOKEN']
       req.headers["Content-Length"] = file.size.to_s
       req.body = Faraday::UploadIO.new(file.path, 'image/jpeg')
     end
