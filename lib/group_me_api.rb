@@ -6,10 +6,12 @@ class GroupMeApi
       body[:attachments] = [attachment]
     end
     header = { 'Content-Type': "text/json" }
-    if ENV['DEV'] == true # Heroku SSL path is different than local
-      connection = Faraday.new(GROUPME_POST_URL, :ssl => { :ca_path => CERT_PATH })
-    else
+    # Heroku cert settings are different than local
+    if RACK_ENV == "production"
       connection = Faraday.new(GROUPME_POST_URL, :ssl => { :ca_file => CERT_PATH })
+    else
+      # this is set for macOS, you may need to tweak if on Windows or Linux
+      connection = Faraday.new(GROUPME_POST_URL, :ssl => { :ca_path => CERT_PATH })
     end
     resp = connection.post do |req|
       req.headers["Content-Type"] = "application/json"
@@ -18,16 +20,16 @@ class GroupMeApi
   end
 
   def self.post_image(file)
-    if ENV['DEV'] == true # Heroku SSL path is different than local
+    if RACK_ENV == "production"
       connection = Faraday.new(GROUPME_IMAGE_URL) do |f|
-        f.ssl.ca_path = CERT_PATH
+        f.ssl.ca_file = CERT_PATH
         f.request :multipart
         f.request :url_encoded
         f.adapter :net_http
       end
     else
       connection = Faraday.new(GROUPME_IMAGE_URL) do |f|
-        f.ssl.ca_file = CERT_PATH
+        f.ssl.ca_path = CERT_PATH
         f.request :multipart
         f.request :url_encoded
         f.adapter :net_http
