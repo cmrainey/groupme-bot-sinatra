@@ -3,8 +3,14 @@ class MessageScanner
     grinch_keys = ["halloween", "spook", "grinch", "october"]
     grinch_keys.each do |key|
       if message["text"].downcase.include?(key)
-        message["text"] = "!stefanchristmas"
-        CommandProcessor.process_command(message, bot_id)
+        text = "Merry Christmas!"
+        image = File.open("assets/christmas_gifs/#{CHRISTMAS_GIFS.sample}", "r")
+        begin
+          image_url = GroupMeApi.post_image(image)
+          attachment = { "type" => "image", "url" => image_url }
+        rescue
+          text = "Merry Christmas, Stefan!"
+        end
       end
     end
     if message["text"].downcase.include?("spoil")
