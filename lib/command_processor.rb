@@ -61,7 +61,7 @@ class CommandProcessor
   def self.roll(message, bot)
     # simple dice roller takes a command in the form "xdy" where x is the number of dice and y is
     # the number of faces, e.g. 1d20 or 8d6
-    dice = message.gsub("!roll ", "")
+    dice = message["text"].gsub("!roll ", "")
     if /\d+d\d+/.match(dice)
       dice_arr = dice_string.split("d")
       number = dice_arr[0].to_i
