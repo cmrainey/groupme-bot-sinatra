@@ -77,7 +77,7 @@ class CommandProcessor
     else
       text = "Invalid dice roll request."
     end
-    GroupMeApi.post_message(text, bot[:bot_id], attachment)
+    GroupMeApi.post_message(text, bot[:bot_id])
   end
 
   def self.progressbar(message, bot)
