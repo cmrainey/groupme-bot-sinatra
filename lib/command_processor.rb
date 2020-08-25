@@ -63,7 +63,7 @@ class CommandProcessor
     # the number of faces, e.g. 1d20 or 8d6
     dice = message["text"].gsub("!roll ", "")
     if /\d+d\d+/.match(dice)
-      dice_arr = dice_string.split("d")
+      dice_arr = dice.split("d")
       number = dice_arr[0].to_i
       die = dice_arr[1].to_i
       rolls = []
