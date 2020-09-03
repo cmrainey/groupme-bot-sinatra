@@ -43,7 +43,7 @@ class CommandProcessor
       # image API fails to complete
       text = "Merry Christmas, #{message["name"]}!"
     end
-    GroupMeApi.post_message(text, bot[:bot_id], attachment)
+    GroupMeApi.post_message(text, bot["bot_id"], attachment)
   end
 
   def self.study(message, bot)
@@ -55,7 +55,7 @@ class CommandProcessor
     rescue
       text = "Go study!"
     end
-    GroupMeApi.post_message(text, bot[:bot_id], attachment)
+    GroupMeApi.post_message(text, bot["bot_id"], attachment)
   end
 
   def self.roll(message, bot)
@@ -77,7 +77,7 @@ class CommandProcessor
     else
       text = "Invalid dice roll request."
     end
-    GroupMeApi.post_message(text, bot[:bot_id])
+    GroupMeApi.post_message(text, bot["bot_id"])
   end
 
   def self.progressbar(message, bot)
@@ -95,7 +95,7 @@ class CommandProcessor
     end
     bar << "]"
     text = "#{today.strftime("%Y")} is \n#{bar} #{pct_done}%\n complete."
-    GroupMeApi.post_message(text, bot[:bot_id])
+    GroupMeApi.post_message(text, bot["bot_id"])
   end
 
   def self.weather(message, bot)
@@ -113,10 +113,10 @@ class CommandProcessor
     rescue
       text = "Couldn't get weather for ZIP code #{zip}."
     end
-    GroupMeApi.post_message(text, bot[:bot_id])
+    GroupMeApi.post_message(text, bot["bot_id"])
   end
 
   def self.open_doors(message, bot)
-    GroupMeApi.post_message("I'm sorry #{message['name']}, I'm afraid I can't do that.", bot[:bot_id])
+    GroupMeApi.post_message("I'm sorry #{message['name']}, I'm afraid I can't do that.", bot["bot_id"])
   end
 end

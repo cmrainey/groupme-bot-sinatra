@@ -3,3 +3,4 @@ environment.rb
 assets/.DS_Store
 .bundle/
 bots/
+bots.json
