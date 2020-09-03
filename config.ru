@@ -47,7 +47,7 @@ if RACK_ENV == "production"
   #     }
   #   ]
   # }
-  BOTS = JSON.parse(ENV["BOTS"])
+  BOTS = JSON.parse(ENV["BOTS"])["bots"]
 else
   # varibles above can be set in development by adding them in environment.rb
   # you'll need to create your own based on evironment.rb.example
