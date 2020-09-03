@@ -6,17 +6,17 @@ class CommandProcessor
     # - a method on the CommandProcesser class
     # - a case in this method that matches the invoke string to that method
 
-    if message["text"].include?("!podbaydoors")
+    if message["text"].include?("!podbaydoors") && !bot["banned_functions"].include?("!podbaydoors")
       open_doors(message, bot)
-    elsif message["text"].include?("!weather")
+    elsif message["text"].include?("!weather") && !bot["banned_functions"].include?("!weather")
       weather(message, bot)
-    elsif message["text"].include?("!christmas")
+    elsif message["text"].include?("!christmas") && !bot["banned_functions"].include?("!christmas")
       christmas(message, bot)
-    elsif message["text"].include?("!study")
+    elsif message["text"].include?("!study") && !bot["banned_functions"].include?("!study")
       study(message, bot)
-    elsif message["text"].include?("!roll")
+    elsif message["text"].include?("!roll") && !bot["banned_functions"].include?("!roll")
       roll(message, bot)
-    elsif message["text"].include?("!progressbar")
+    elsif message["text"].include?("!progressbar") && !bot["banned_functions"].include?("!progressbar")
       progressbar(message, bot)
     else
       unkown(message, bot)

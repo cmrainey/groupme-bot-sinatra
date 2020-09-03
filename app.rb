@@ -23,7 +23,7 @@ post "/" do
 
   # select the appropriate bot for this message
   # see config.ru for how this array is obtained
-  bot = BOTS.select{ |b| b[:group_id].to_s == message["group_id"].to_s }.first
+  bot = BOTS.select{ |b| b["group_id"].to_s == message["group_id"].to_s }.first
 
   # don't run unless we have a bot for this group
   unless bot == nil || bot.empty?
@@ -32,8 +32,10 @@ post "/" do
     if message["text"][0] == "!"
       CommandProcessor.process(message, bot)
     else
-      # scan for keywords for automated responses
-      MessageScanner.scan(message, bot)
+      unless bot["disable_scanner"]
+        # scan for keywords for automated responses
+        MessageScanner.scan(message, bot)
+      end
     end
   end
 end

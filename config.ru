@@ -28,22 +28,26 @@ if RACK_ENV == "production"
   CHRISTMAS_GIFS = ENV['CHRISTMAS_GIFS'].split(",")
   STUDY_GIFS = ENV['STUDY_GIFS'].split(",")
   CERT_PATH = ENV['CERT_PATH']
-  # parse the BOTS environment variable since Heroku doesn't do arrays in config vars
-  # default string format to parse into bot array is:
-  #
-  # - "bot_id:abc123;group_name:Test Group 1;group_id:123456|bot_id:def456;group_name:Test Group 2;group_id:654321"
-  #
-  # you can add any number of bots, separated by "|". I include the group
-  # name to help me keep track, but it's not used for anything, so you
-  # can remove it if desired
-  bots = []
-  ENV['BOTS'].split("|").each do |s|
-    strings = s.split(";")
-    bot_id = strings[0].split(":")[1]
-    group_id = strings[2].split(":")[1]
-    bots << { :bot_id => bot_id, :group_id => group_id }
-  end
-  BOTS = bots
+  # ENV['BOTS'] should be a JSON string of the following format:
+  # { 
+  #   "bots": [
+  #     {
+  #       "bot_id": "BOTID",  
+  #       "group_id": "GROUPID"
+  #       "group_name": "GROUPNAME"
+  #       "banned_functions": ["array","of","banned","function","names"]
+  #       "disable_scanner": boolean
+  #     },
+  #     {
+  #       "bot_id": "BOTID",  
+  #       "group_id": "GROUPID"
+  #       "group_name": "GROUPNAME"
+  #       "banned_functions": ["array","of","banned","function","names"]
+  #       "disable_scanner": boolean
+  #     }
+  #   ]
+  # }
+  BOTS = JSON.parse(ENV["BOTS"])
 else
   # varibles above can be set in development by adding them in environment.rb
   # you'll need to create your own based on evironment.rb.example
