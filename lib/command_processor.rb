@@ -104,7 +104,7 @@ class CommandProcessor
     today = Date.today
     baby_start = Date.new(2020,11,27)
     baby_finish = Date.new(2021,8,27)
-    baby_pct = ( ( today - baby_start ) / ( baby_finish - baby_start ) ).to_f * 100 )
+    baby_pct = ( ( today - baby_start ) / ( baby_finish - baby_start ) ).to_f * 100
     baby_pct_not = 100 - baby_pct
     bar = "["
     (baby_pct / 4).round.times do
