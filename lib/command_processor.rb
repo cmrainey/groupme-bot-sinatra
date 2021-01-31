@@ -18,6 +18,7 @@ class CommandProcessor
       roll(message, bot)
     elsif message["text"].include?("!progressbar") && !bot["banned_functions"].include?("!progressbar")
       progressbar(message, bot)
+    elsif message["text"].include?("!progressbaby") && !bot["banned_functions"].include?("!progressbaby")
     else
       unkown(message, bot)
     end
@@ -95,6 +96,24 @@ class CommandProcessor
     end
     bar << "]"
     text = "#{today.strftime("%Y")} is \n#{bar} #{pct_done}%\n complete."
+    GroupMeApi.post_message(text, bot["bot_id"])
+  end
+
+  def baby_progress(message, bot)
+    today = Date.today
+    baby_start = Date.new(2020,11,27)
+    baby_finish = Date.new(2021,8,27)
+    baby_pct = ( ( today - baby_start ) / ( baby_finish - baby_start ) ).to_f * 100 )
+    baby_pct_not = 100 - baby_pct
+    bar = "["
+    (baby_pct / 4).round.times do
+      bar << "👶"
+    end
+    (baby_pct_not / 4).round.times do
+      bar << "  "
+    end
+    bar << "]"
+    text = "Baby is \n#{bar} #{pct_done}%\n complete."
     GroupMeApi.post_message(text, bot["bot_id"])
   end
 
