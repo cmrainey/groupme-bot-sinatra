@@ -111,7 +111,7 @@ class CommandProcessor
       bar << "👶"
     end
     (baby_pct_not / 8).round.times do
-      bar << "    "
+      bar << "_"
     end
     bar << "]"
     GroupMeApi.post_message(bar, bot["bot_id"])
