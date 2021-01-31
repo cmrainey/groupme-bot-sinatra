@@ -18,7 +18,7 @@ class CommandProcessor
       roll(message, bot)
     elsif message["text"].include?("!progressbar") && !bot["banned_functions"].include?("!progressbar")
       progressbar(message, bot)
-    elsif message["text"].include?("!progressbaby") && !bot["banned_functions"].include?("!progressbaby")
+    elsif message["text"].include?("!babyprogress") && !bot["banned_functions"].include?("!progressbaby")
       baby_progress(message,bot)
     else
       unknown_command(message, bot)
@@ -114,8 +114,8 @@ class CommandProcessor
       bar << "__"
     end
     bar << "]"
-    GroupMeApi.post_message(bar, bot["bot_id"])
     GroupMeApi.post_message("Baby is #{baby_pct}% complete.", bot["bot_id"])
+    GroupMeApi.post_message(bar, bot["bot_id"])
   end
 
   def self.weather(message, bot)
