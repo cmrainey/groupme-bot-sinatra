@@ -107,10 +107,10 @@ class CommandProcessor
     baby_pct = (( ( today - baby_start ) / ( baby_finish - baby_start ) ).to_f * 100).round(1)
     baby_pct_not = 100.0 - baby_pct
     bar = "["
-    (baby_pct / 4).round.times do
+    (baby_pct / 8).round.times do
       bar << "👶"
     end
-    (baby_pct_not / 4).round.times do
+    (baby_pct_not / 8).round.times do
       bar << "  "
     end
     bar << "]"
