@@ -111,7 +111,7 @@ class CommandProcessor
       bar << "👶"
     end
     (baby_pct_not / 8).round.times do
-      bar << "  "
+      bar << "   "
     end
     bar << "]"
     text = "Baby is \n#{bar} #{baby_pct}%\n complete."
