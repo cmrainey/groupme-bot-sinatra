@@ -111,11 +111,11 @@ class CommandProcessor
       bar << "👶"
     end
     (baby_pct_not / 8).round.times do
-      bar << "   "
+      bar << "    "
     end
     bar << "]"
-    text = "Baby is \n#{bar} #{baby_pct}%\n complete."
-    GroupMeApi.post_message(text, bot["bot_id"])
+    GroupMeApi.post_message(bar, bot["bot_id"])
+    GroupMeApi.post_message("Baby is #{baby_pct}% complete.", bot["bot_id"])
   end
 
   def self.weather(message, bot)
