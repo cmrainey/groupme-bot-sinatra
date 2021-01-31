@@ -19,12 +19,13 @@ class CommandProcessor
     elsif message["text"].include?("!progressbar") && !bot["banned_functions"].include?("!progressbar")
       progressbar(message, bot)
     elsif message["text"].include?("!progressbaby") && !bot["banned_functions"].include?("!progressbaby")
+      baby_progress(message,bot)
     else
-      unkown(message, bot)
+      unknown_command(message, bot)
     end
   end
 
-  def self.unkown_command(message, bot)
+  def self.unknown_command(message, bot)
     # simple text response with no added logic
     # see group_me_api.rb for the GroupMe API wrapper class
     GroupMeApi.post_message("Unknown command: #{message['text']}")
@@ -99,7 +100,7 @@ class CommandProcessor
     GroupMeApi.post_message(text, bot["bot_id"])
   end
 
-  def baby_progress(message, bot)
+  def self.baby_progress(message, bot)
     today = Date.today
     baby_start = Date.new(2020,11,27)
     baby_finish = Date.new(2021,8,27)
