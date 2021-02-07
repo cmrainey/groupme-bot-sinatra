@@ -1,9 +1,8 @@
 source "https://rubygems.org"
 
-ruby '3.0.0'
+ruby '2.6.6'
 
 # main
-gem 'rack'
 gem 'dotenv'
 gem 'sinatra'
 gem 'httparty'
