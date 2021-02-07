@@ -18,12 +18,3 @@ CERT_PATH = "/path/to/ssl/cert"
 # files should be stored in /assets in the app root dir
 CHRISTMAS_GIFS = ["beautiful.gif", "candles.gif","charlie_brown.gif","grinch.gif","santa.gif","snownman.gif"]
 STUDY_GIFS = ["chilled_cow.gif","loki.gif","study_time.gif"]
-
-# create an array of the bots that you wish to use. Any number can be added.
-# group_name is not necessary, but is added for convenience to remember which bot goes with which group when handling multiple bots
-# group names can change frequently so use this as personal reference, but don't refer to it in the code.
-# group id and bot id will not change when group names change
-BOTS = [
-  { :bot_id => "abc123", :group_name => "Test Group 1", :group_id => 123456 },
-  { :bot_id => "def456", :group_name => "Test Group 2", :group_id => 987654 }
-]

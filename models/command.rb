@@ -1,34 +1,16 @@
-class CommandProcessor
-  def self.process(message, bot)
-    
-    # you can add any number of commands; just give them:
-    # - an !invoke string
-    # - a method on the CommandProcesser class
-    # - a case in this method that matches the invoke string to that method
+require 'sinatra/activerecord'
 
-    if message["text"].include?("!podbaydoors") && !bot["banned_functions"].include?("!podbaydoors")
-      open_doors(message, bot)
-    elsif message["text"].include?("!weather") && !bot["banned_functions"].include?("!weather")
-      weather(message, bot)
-    elsif message["text"].include?("!christmas") && !bot["banned_functions"].include?("!christmas")
-      christmas(message, bot)
-    elsif message["text"].include?("!study") && !bot["banned_functions"].include?("!study")
-      study(message, bot)
-    elsif message["text"].include?("!roll") && !bot["banned_functions"].include?("!roll")
-      roll(message, bot)
-    elsif message["text"].include?("!progressbar") && !bot["banned_functions"].include?("!progressbar")
-      progressbar(message, bot)
-    elsif message["text"].include?("!babyprogress") && !bot["banned_functions"].include?("!progressbaby")
-      baby_progress(message,bot)
+class Command < ActiveRecord::Base
+
+  validates_uniqueness_of :command
+
+  def self.search_command(command, bot)
+    c = Command.where(:invocation => command).where(:bot_id => bot.bot_id).first
+    if c.present?
+      c.call(bot.bot_id)
     else
-      unknown_command(message, bot)
+      GroupMeApi.post_message("Unknown command #{command}.", bot.bot_id)
     end
-  end
-
-  def self.unknown_command(message, bot)
-    # simple text response with no added logic
-    # see group_me_api.rb for the GroupMe API wrapper class
-    GroupMeApi.post_message("Unknown command: #{message['text']}")
   end
 
   def self.christmas(message, bot)
@@ -43,9 +25,9 @@ class CommandProcessor
     rescue
       # you should specify a text fallback for most image posting methods in case the POST to GroupMe's
       # image API fails to complete
-      text = "Merry Christmas, #{message["name"]}!"
+      text = "Merry Christmas, #{message.name}!"
     end
-    GroupMeApi.post_message(text, bot["bot_id"], attachment)
+    return MessageReply.new(text, attachment, bot)
   end
 
   def self.study(message, bot)
@@ -57,13 +39,13 @@ class CommandProcessor
     rescue
       text = "Go study!"
     end
-    GroupMeApi.post_message(text, bot["bot_id"], attachment)
+    return MessageReply.new(text, attachment, bot)
   end
 
   def self.roll(message, bot)
     # simple dice roller takes a command in the form "xdy" where x is the number of dice and y is
     # the number of faces, e.g. 1d20 or 8d6
-    dice = message["text"].gsub("!roll ", "")
+    dice = message.text.gsub("!roll ", "")
     if /\d+d\d+/.match(dice)
       dice_arr = dice.split("d")
       number = dice_arr[0].to_i
@@ -79,7 +61,7 @@ class CommandProcessor
     else
       text = "Invalid dice roll request."
     end
-    GroupMeApi.post_message(text, bot["bot_id"])
+    return MessageReply.new(text, nil, bot)
   end
 
   def self.progressbar(message, bot)
@@ -97,7 +79,7 @@ class CommandProcessor
     end
     bar << "]"
     text = "#{today.strftime("%Y")} is \n#{bar} #{pct_done}%\n complete."
-    GroupMeApi.post_message(text, bot["bot_id"])
+    return MessageReply.new(text, nil, bot)
   end
 
   def self.baby_progress(message, bot)
@@ -114,14 +96,13 @@ class CommandProcessor
       bar << "__"
     end
     bar << "]"
-    GroupMeApi.post_message("Baby is #{baby_pct}% complete.", bot["bot_id"])
-    GroupMeApi.post_message(bar, bot["bot_id"])
+    return MessageReply.new("Baby is \n#{bar} #{baby_pct}%\ncomplete.", nil, bot)
   end
 
   def self.weather(message, bot)
     # gets the current weather at a given 5-digit ZIP code from the OpenWeather API
     # see open_weath_api.rb for the API wrapper class
-    zip = message["text"].gsub("!weather ", "").to_i.to_s
+    zip = message.text.gsub("!weather ", "").to_i.to_s
     if zip.length < 5
       zeroes = 5 - zip.length
       zeroes.times do
@@ -133,10 +114,11 @@ class CommandProcessor
     rescue
       text = "Couldn't get weather for ZIP code #{zip}."
     end
-    GroupMeApi.post_message(text, bot["bot_id"])
+    return MessageReply.new(text, nil, bot)
   end
 
-  def self.open_doors(message, bot)
-    GroupMeApi.post_message("I'm sorry #{message['name']}, I'm afraid I can't do that.", bot["bot_id"])
+  def call(bot_id)
+    GroupMeApi.post_message(self.text, bot_id)
   end
+
 end
