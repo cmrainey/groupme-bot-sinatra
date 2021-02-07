@@ -3,6 +3,7 @@ source "https://rubygems.org"
 ruby '3.0.0'
 
 # main
+gem 'rack'
 gem 'dotenv'
 gem 'sinatra'
 gem 'httparty'

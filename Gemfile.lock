@@ -76,6 +76,7 @@ DEPENDENCIES
   httparty
   mimemagic
   pg
+  rack
   rack-test
   rake
   require_all
