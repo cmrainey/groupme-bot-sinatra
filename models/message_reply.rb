@@ -1,5 +1,7 @@
-class MessageReply
+require './lib/apis/group_me'
 
+class MessageReply
+  attr_accessor :text, :attachment, :bot
   def initialize(text, attachment=nil, bot)
     @text = text
     @attachment = attachment

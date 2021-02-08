@@ -1,4 +1,8 @@
 require 'sinatra/activerecord'
+require './models/message'
+require './models/message_reply'
+require './lib/apis/group_me'
+require './lib/apis/open_weather'
 
 class Command < ActiveRecord::Base
 

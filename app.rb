@@ -1,13 +1,8 @@
-#require_relative "environment.rb"
-require "sinatra/base"
-require "sinatra/activerecord"
-
-
 class Application < Sinatra::Base
   post "/" do
-    message = params
     # parse the GroupMe callback into a useful form:
-    message = Message.new(JSON.parse(request.body.read))
+    json = JSON.parse(request.body.read)
+    message = Message.create_from_hash(json)
     # for reference, the GroupMe callback posts JSON data in this format:
     #
     #  {
@@ -27,14 +22,16 @@ class Application < Sinatra::Base
     #
     if message.bot.present?
       if message.text[0] == "!"
-        command = message.text[/(\!\S+)/,1].gsub("!","")
-        begin
-          Command.public_send(command, message, bot).post
-        rescue
-          Command.search_command(command, bot)
+        command = message.text[/(\!\S+)/,1]
+        if command.present?
+          begin
+            Command.public_send(command.gsub("!",""), message, message.bot).post
+          rescue
+            Command.search_command(command.gsub("!",""), message.bot)
+          end
         end
       else
-        Scannable.scan_message(message).post
+        Scannable.scan_message(message)
       end
     end
   end
