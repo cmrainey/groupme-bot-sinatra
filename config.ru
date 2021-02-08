@@ -5,17 +5,17 @@ require "openssl"
 require "faraday"
 require "mimemagic"
 require "net/http"
-# load local code
-require_relative "app"
-require_relative "lib/apis/group_me"
-require_relative "lib/apis/open_weather"
-require_relative "models/bot"
-require_relative "models/command"
-require_relative "models/message"
-require_relative "models/message_reply"
-require_relative "models/scannable"
 # database
 require 'sinatra/activerecord'
+# load local code
+require "./app"
+require "./lib/apis/group_me"
+require "./lib/apis/open_weather"
+require "./models/bot"
+require "./models/command"
+require "./models/message"
+require "./models/message_reply"
+require "./models/scannable"
 
 # set RACK_ENV if it's not set already
 if ENV['RACK_ENV'] != nil
@@ -39,4 +39,4 @@ else
   require_relative 'environment'
 end
 
-run Sinatra::Application
+run Application

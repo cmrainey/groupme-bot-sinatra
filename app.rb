@@ -1,5 +1,10 @@
 class Application < Sinatra::Base
-  post "/" do
+  
+  get '/' do
+    "Hello, World!"
+  end
+
+  post '/' do
     # parse the GroupMe callback into a useful form:
     json = JSON.parse(request.body.read)
     message = Message.create_from_hash(json)
@@ -22,16 +27,14 @@ class Application < Sinatra::Base
     #
     if message.bot.present?
       if message.text[0] == "!"
-        command = message.text[/(\!\S+)/,1]
-        if command.present?
-          begin
-            Command.public_send(command.gsub("!",""), message, message.bot).post
-          rescue
-            Command.search_command(command.gsub("!",""), message.bot)
-          end
+        command = message.text[/(\!\S+)/,1].gsub("!","")
+        begin
+          Command.public_send(command, message, message.bot).post
+        rescue
+          Command.search_command(command, message.bot)
         end
       else
-        Scannable.scan_message(message)
+        Scannable.scan_message(message).post
       end
     end
   end
