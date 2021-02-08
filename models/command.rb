@@ -6,8 +6,6 @@ require './lib/apis/open_weather'
 
 class Command < ActiveRecord::Base
 
-  validates_uniqueness_of :command
-
   def self.search_command(command, bot)
     c = Command.where(:invocation => command).where(:bot_id => bot.bot_id).first
     if c.present?
