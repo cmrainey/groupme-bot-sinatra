@@ -34,7 +34,7 @@ class Application < Sinatra::Base
           Command.search_command(command, message.bot)
         end
       else
-        Scannable.scan_message(message).post
+        Scannable.scan_message(message)
       end
     end
   end
