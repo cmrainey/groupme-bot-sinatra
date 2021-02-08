@@ -86,7 +86,7 @@ class Command < ActiveRecord::Base
     return MessageReply.new(text, nil, bot)
   end
 
-  def self.baby_progress(message, bot)
+  def self.babyprogress(message, bot)
     today = Date.today
     baby_start = Date.new(2020,11,27)
     baby_finish = Date.new(2021,8,27)
