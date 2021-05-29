@@ -86,7 +86,7 @@ class Command < ActiveRecord::Base
 
   def self.babyprogress(message, bot)
     today = Date.today
-    baby_start = Date.new(2020,11,27)
+    baby_start = Date.new(2020,11,20)
     baby_finish = Date.new(2021,8,27)
     baby_pct = (( ( today - baby_start ) / ( baby_finish - baby_start ) ).to_f * 100).round(1)
     baby_pct_not = 100.0 - baby_pct
